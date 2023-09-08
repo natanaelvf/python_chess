@@ -6,7 +6,9 @@ from pieces.pawn import *
 from pieces.rook import *
 from pieces.queen import *
 
-def get_available_moves(board, player_color):
+from typing import List
+
+def get_available_moves(board : List[int], player_color : int) -> List[int]:
     available_moves = []
 
     for index in range(len(board)) :
@@ -21,7 +23,7 @@ def get_available_moves(board, player_color):
 
     return available_moves
 
-def get_piece_moves(index, piece, board) :
+def get_piece_moves(index : int, piece : int, board : List[int]) -> List[int] :
     # We don't care if the piece is black or white when calling the get_moves_function
     normalised_piece = piece & 0b0111
 

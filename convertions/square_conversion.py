@@ -1,4 +1,6 @@
-def square_string_to_binary(square):
+import string
+
+def square_string_to_binary(square : string) -> int:
     # Empty squares
     if square == " ":
         return 0
@@ -33,7 +35,7 @@ def square_string_to_binary(square):
         case "N":
             return 10
         
-def square_binary_to_string(square):
+def square_binary_to_string(square : int) -> string:
     # Empty squares
     if square == 0:
         return " "

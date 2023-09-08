@@ -1,6 +1,8 @@
+import string
+from typing import List
 from convertions.square_conversion import *
 
-def fen_to_board(fen):
+def fen_to_board(fen : string) -> List:
     board = [" "] * 64  # Initialize an empty board (using a flat list)
 
     fen_parts = fen.split(" ")
@@ -22,7 +24,7 @@ def fen_to_board(fen):
 
     return board
 
-def board_to_fen(board):
+def board_to_fen(board : List[int]) -> List[int] :
     fen = ""
     empty_count = 0
 
@@ -43,10 +45,10 @@ def board_to_fen(board):
                 fen += "/"
     return fen
 
-def string_to_binary_board(board) :
+def string_to_binary_board(board : List[int]) -> List[int] :
     return list(map(lambda square: square_string_to_binary(square), board))
 
-def visualize_board(board):
+def visualize_board(board : List[int]) -> None:
     print(" | a | b | c | d | e | f | g | h |")
     print("-+-------------------------------+")
 

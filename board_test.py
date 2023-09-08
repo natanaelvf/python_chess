@@ -39,4 +39,18 @@ board = fen_to_board(fen)
 #print((white_king & 0b0111) == black_king)
 
 binary_board = string_to_binary_board(board)
-print(get_available_moves(binary_board, 0))
+available_moves = get_available_moves(binary_board, 0)
+
+"""
+# Visualising first move a3
+for moves in available_moves :
+    piece = moves[1]
+    index = moves[0]
+    for move in moves:
+        print(moves)
+        board[moves[3]] = square_binary_to_string(piece)
+        board[moves[0]] = " "
+        visualize_board(board)
+        break
+    break
+"""

@@ -1,7 +1,8 @@
+from typing import List
 from pieces.piece import *
 
-def get_bishop_moves(index, piece, board):
-    available_moves = []
+def get_bishop_moves(index : int, piece : int, board : List[int]) -> List[int]:
+    available_moves = [index, piece]
 
     # Bishop move directions (diagonal)
     directions = [(1, 1), (1, -1), (-1, 1), (-1, -1)]

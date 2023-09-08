@@ -1,5 +1,7 @@
-def get_pawn_moves(index, piece, board):
-    available_moves = []
+from typing import List
+
+def get_pawn_moves(index: int, piece: int, board: List[int]) -> List[int]:
+    available_moves = [index, piece]
 
     is_white = (piece >> 3) & 1
 
@@ -21,11 +23,11 @@ def get_pawn_moves(index, piece, board):
 
     # Check if the target squares for diagonal pawn captures contain an opponent's piece
     left_capture = index + left_capture_offset
-    if 0 <= left_capture < 64 and ((piece >> 3) != (board[left_capture] >> 3)):
+    if 0 <= left_capture < 64 and ((piece >> 3) != (board[left_capture] >> 3)) and board[left_capture] != 0:
         available_moves.append(left_capture)
 
     right_capture = index + right_capture_offset
-    if 0 <= right_capture < 64 and ((piece >> 3) != (board[right_capture] >> 3)):
+    if 0 <= right_capture < 64 and ((piece >> 3) != (board[right_capture] >> 3)) and board[right_capture] != 0:
         available_moves.append(right_capture)
 
     return available_moves

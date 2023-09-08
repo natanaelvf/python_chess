@@ -1,7 +1,8 @@
+from typing import List
 from pieces.piece import *
 
-def get_rook_moves(index, piece, board):
-    available_moves = []
+def get_rook_moves(index : int, piece : int, board : List[int]) -> List[int]:
+    available_moves = [index, piece]
 
     directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
