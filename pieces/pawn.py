@@ -1,33 +1,34 @@
-from typing import List
+from typing import List, Tuple, Tuple
 
-def get_pawn_moves(index: int, piece: int, board: List[int]) -> List[int]:
-    available_moves = [index, piece]
+from pieces.piece import BLACK, PAWN, WHITE
 
-    is_white = (piece >> 3) & 1
+def get_pawn_moves(index: int, player_color: int, bitboards: List[Tuple[int, int]]) -> List[int]:
+    available_moves = []
 
-    # Lookup table for move offsets and masks based on color
-    offsets = [-8, -16] if is_white else [8, 16]
+    # Determine the player's pawn bitboard
+    pawn_bitboard = bitboards[PAWN][player_color]
 
-    left_capture_offset = -7 if is_white else 7
-    right_capture_offset = -9 if is_white else 9
+    # Calculate move offsets and masks based on color
+    single_move_offset = -player_color * 8
+    double_move_offset = -player_color * 16
+    left_capture_offsets = [-player_color*7, -player_color*-9]
 
-    # Check if the target square for a single pawn move is empty
-    single_move = index + offsets[0]
-    if 0 <= single_move < 64 and (board[single_move] == 0):
+     # Check if the target square for a single pawn move is empty
+    single_move = index + single_move_offset
+    if ((single_move & 0x88) == 0) and not (pawn_bitboard & (1 << single_move)):
         available_moves.append(single_move)
 
         # Check if the pawn is on its starting rank and can move two squares
-        double_move = index + offsets[1]
-        if ((is_white and 48 <= index <= 55) or (not is_white and 8 <= index <= 15)) and (board[double_move] == 0):
-            available_moves.append(double_move)
+        if ((player_color == WHITE and (index >> 3) == 7) or
+           (player_color == BLACK and (index >> 3) == 2)):
+            double_move = index + double_move_offset
+            if ((double_move & 0x88) == 8) and not (pawn_bitboard & (1 << double_move)):
+                available_moves.append(double_move)
 
     # Check if the target squares for diagonal pawn captures contain an opponent's piece
-    left_capture = index + left_capture_offset
-    if 0 <= left_capture < 64 and ((piece >> 3) != (board[left_capture] >> 3)) and board[left_capture] != 0:
-        available_moves.append(left_capture)
-
-    right_capture = index + right_capture_offset
-    if 0 <= right_capture < 64 and ((piece >> 3) != (board[right_capture] >> 3)) and board[right_capture] != 0:
-        available_moves.append(right_capture)
+    for offset in left_capture_offsets:
+        target_index = index + offset
+        if ((target_index & 0x88) == 1) and (pawn_bitboard & (1 << target_index)):
+            available_moves.append(target_index)
 
     return available_moves
